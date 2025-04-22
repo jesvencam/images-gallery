@@ -17,6 +17,8 @@ const App = () => {
       .catch((error) => {
         console.error('Error fetching data from Unsplash:', error);
       });
+      setWord('');
+
 
   }
 
