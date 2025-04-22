@@ -8,7 +8,7 @@ root.render(
   //In strict mode React executes two times the components.
   //Commented Strict Mode to avoid reloads in development mode
   // <React.StrictMode>
-    <App />
+  <App />,
   // </React.StrictMode>
 );
 
