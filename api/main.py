@@ -3,11 +3,14 @@ from requests import get
 import os
 from dotenv import load_dotenv
 from flask_cors import CORS
+import requests
 
 load_dotenv(dotenv_path="./.env.local")
-UNSPLASH_KEY=os.environ.get("UNSPLASH_KEY","")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY","")
 UNSPLASH_URL="https://api.unsplash.com/photos/random"
 DEBUG=bool(os.environ.get("DEBUG", True))
+
+print(UNSPLASH_KEY)
 
 if not UNSPLASH_KEY:
     raise EnvironmentError("Please set the UNSPLASH_KEY environment variable in .env.local")
@@ -22,7 +25,7 @@ def new_image():
 
     headers= {
         "Accept-Version": "v1",
-        "Autorization": "Client-ID " + UNSPLASH_KEY
+        "Authorization": "Client-ID " + UNSPLASH_KEY
     }
     params = {
         "query": word

@@ -6,7 +6,6 @@ import ImageCard from './components/ImageCard';
 import Welcome from './components/Welcome';
 import { Row, Container, Col } from 'react-bootstrap';
 
-
 const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5050';
 
 const App = () => {
