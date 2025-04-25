@@ -2,6 +2,7 @@ from flask import Flask, request
 from requests import get
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv(dotenv_path="./.env.local")
 UNSPLASH_KEY=os.environ.get("UNSPLASH_KEY","")
@@ -12,6 +13,7 @@ if not UNSPLASH_KEY:
     raise EnvironmentError("Please set the UNSPLASH_KEY environment variable in .env.local")
 
 app = Flask(__name__)
+CORS(app)
 
 app.config["DEBUG"] = DEBUG
 @app.route("/new-image")
