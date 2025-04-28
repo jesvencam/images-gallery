@@ -6,7 +6,7 @@
         "javascriptreact",
     ],
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": "explicit"
     },
     "python.pythonPath": "api/.venv/bin/python3",
     "editor.renderWhitespace": "none",
@@ -14,7 +14,11 @@
     "python.linting.pycodestyleArgs":[
         "--max-line-length=88"
     ],
-
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
     "python.linting.pylintEnabled": true,
     "python.formatting.provider": "black",
     "[python]":{

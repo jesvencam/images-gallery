@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 import Header from './components/Header';
 import Search from './components/Search';
 import ImageCard from './components/ImageCard';
@@ -12,17 +13,39 @@ const App = () => {
   const [word, setWord] = useState('');
   const [images, setImages] = useState([]);
 
-  const handleSearchSubmit = (event) => {
+  const getSavedImages = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/images`);
+      setImages(res.data || []);
+      console.log(res);
+    } catch (error) {
+      console.log('Error: ', error);
+    }
+  };
+
+  useEffect(() => getSavedImages(), []);
+
+  const handleSaveImage = async (id) => {
+    const imageToBeSaved = images.find((image) => image.id === id);
+    imagesToBeSaved.saved = true;
+    try{
+      const res = await axios.post(`${API_URL}/images`,imageToBeSaved);
+      if (res.data?.inserted_id){
+        setImages(images.map((image) => image.id=== id? {...image,saved:true}:image));
+      }
+    }catch (error) {
+      console.log('Error saving image:', error);
+    }
+  }
+  const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    fetch(`${API_URL}/new-image?query=${word}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setImages([{ ...data, title: word }, ...images]);
-      })
-      .catch((error) => {
-        console.error('Error fetching data from Unsplash:', error);
-      });
+    try {
+      const res = await axios.get(`${API_URL}/new-image?query=${word}`);
+      setImages([{ ...res.data, title: word }, ...images]);
+      console.log(res);
+    } catch (error) {
+      console.log('Error fetching data from Unsplash:', error);
+    }
     setWord('');
   };
 
@@ -43,6 +66,7 @@ const App = () => {
                   key={i}
                   image={image}
                   deleteImage={handleDeleteImage}
+                  saveImage={handleSaveImage}
                 />
               </Col>
             ))}
